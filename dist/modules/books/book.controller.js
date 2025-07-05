@@ -23,6 +23,8 @@ const getBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const sortBy = (_b = req === null || req === void 0 ? void 0 : req.query) === null || _b === void 0 ? void 0 : _b.sortBy;
         const sortRule = req.query.sort;
         const limit = parseInt(req.query.limit) || 10;
+        const page = parseInt(req.query.page) || 1;
+        const skip = (page - 1) * limit;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const query = {};
         if (filterOption) {
@@ -32,10 +34,21 @@ const getBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (sortBy) {
             sortQuery[sortBy] = sortRule === "desc" ? -1 : 1;
         }
-        const books = yield book_model_1.default.find(query).sort(sortQuery).limit(limit);
+        const totalBooks = yield book_model_1.default.countDocuments(query);
+        const books = yield book_model_1.default.find(query)
+            .sort(sortQuery)
+            .skip(skip)
+            .limit(limit);
+        const totalPages = Math.ceil(totalBooks / limit);
         res.status(201).send({
             success: true,
             message: "Books retrieved successfully",
+            meta: {
+                page,
+                limit,
+                total: totalBooks,
+                totalPages,
+            },
             data: books,
         });
     }
@@ -103,6 +116,7 @@ const postBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const payload = req.body;
         const parsedData = yield book_zodSchema_1.booksZodSchema.parseAsync(payload);
+        console.log(parsedData);
         const data = yield book_model_1.default.create(parsedData);
         res.status(201).send({
             success: true,
