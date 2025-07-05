@@ -32,6 +32,8 @@ async function server() {
     await mongoose.connect(config.db_url!);
 
     console.log(`🍃🍃🍃 connected to database`);
+    console.log("DB_URL:", config.db_url);
+
   } catch (error) {
     console.error({
       message: `Something went wrong in the server ${server} `,
