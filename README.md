@@ -1,5 +1,5 @@
 # 📚 Library Management System API
-## Level 2 Mongoose Assignment
+## Redux Rtk Query Project's Backend
 একটা সিম্পল Library Management System Api Project যা টাইপস্ক্রিপ, Mongoose, Express এর উপর বিল্ড করা। এই Api User কে book manage করতে, borrow করতে এবং borrow books গুলোর real time summery track করতে সাহায্য করে। এখানে Proper Validation Business logic ব্যবহার করা হয়েছে।
 
 ## 🚀 Features
