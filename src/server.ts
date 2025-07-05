@@ -6,7 +6,11 @@ import routes from "./modules/routes";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 app.use(express.json());
 app.use(routes);
 
@@ -33,9 +37,6 @@ async function server() {
       message: `Something went wrong in the server ${server} `,
       error,
     });
-
-    
-
   }
 }
 server();

@@ -104,8 +104,6 @@ export const postBook = async (req: Request, res: Response): Promise<void> => {
   try {
     const payload = req.body;
     const parsedData = await booksZodSchema.parseAsync(payload);
-    console.log(parsedData)
-
     const data = await Book.create(parsedData);
     res.status(201).send({
       success: true,
